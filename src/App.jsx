@@ -440,12 +440,12 @@ export default function App() {
         )}
 
         {/* Benchmark card */}
-        <div style={{ background: "white", borderRadius: 16, padding: "18px 24px", marginTop: 12, boxShadow: "0 2px 12px rgba(0,0,0,0.06)", border: "1px solid #e8f0ee" }}>
+        <div style={{ background: "white", borderRadius: 16, padding: "18px 24px", marginTop: 12, boxShadow: "0 2px 12px rgba(0,0,0,0.06)", border: "1px solid #e8f0ee", boxSizing: "border-box", overflow: "hidden" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12, flexWrap: "wrap" }}>
             <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#7a9e98" }}>Benchmarks</span>
             <span style={{ fontSize: 12, color: "#bcd4cf" }}>— toggle to compare where you stand vs. market</span>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 10 }}>
             {BENCHMARKS.map(b => {
               const bm = benchmarkMultiples.find(x => x.id === b.id);
               const active = activeBenchmarks.includes(b.id);
@@ -455,7 +455,7 @@ export default function App() {
                   background: active ? b.color + "14" : "#f8faf9",
                   border: `2px solid ${active ? b.color : "#e0ebe8"}`,
                   borderRadius: 12, padding: "10px 16px", cursor: "pointer",
-                  transition: "all 0.18s", textAlign: "left", width: "100%",
+                  transition: "all 0.18s", textAlign: "left", minWidth: 0, boxSizing: "border-box",
                 }}>
                   <div style={{
                     width: 12, height: 12, borderRadius: "50%",
@@ -477,12 +477,12 @@ export default function App() {
             <div style={{
               display: "flex", alignItems: "center", gap: 10,
               background: "#0e4f4f14", border: "2px solid #0e4f4f",
-              borderRadius: 12, padding: "10px 16px", width: "100%",
+              borderRadius: 12, padding: "10px 16px", minWidth: 0, boxSizing: "border-box",
             }}>
               <div style={{ width: 12, height: 12, borderRadius: "50%", background: "#0e4f4f", border: "2px solid white", boxShadow: "0 0 0 1.5px #0e4f4f", flexShrink: 0 }} />
               <div>
                 <div style={{ fontSize: 12, fontWeight: 700, color: "#0e4f4f", lineHeight: 1.2 }}>
-                  You — <span style={{ fontFamily: "'DM Mono', monospace" }}>{range}</span>
+                  You <span style={{ fontFamily: "'DM Mono', monospace", marginLeft: 6 }}>{range}</span>
                 </div>
                 <div style={{ fontSize: 10, color: "#aaa", lineHeight: 1.3 }}>Your current settings</div>
               </div>
