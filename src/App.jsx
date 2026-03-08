@@ -343,7 +343,7 @@ export default function App() {
           {/* Score bar */}
           <div style={{ flex: 1, minWidth: 220 }}>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#7a9e98", marginBottom: 5 }}>
-              <span>3x</span><span>5x</span><span>6.5x</span><span>8x+</span>
+              <span>3x</span><span>5x</span><span>6.5x</span><span>7x+</span>
             </div>
             <div style={{ position: "relative", height: 14, background: "#e8f0ee", borderRadius: 99 }}>
               <div style={{
@@ -377,13 +377,14 @@ export default function App() {
           </div>
 
           <button onClick={() => setShowWeights(!showWeights)} style={{
-            background: showWeights ? "#0e4f4f" : "white",
-            color: showWeights ? "white" : "#0e4f4f",
-            border: "2px solid #0e4f4f", borderRadius: 10,
-            padding: "10px 18px", fontSize: 13, fontWeight: 700,
+            background: "transparent",
+            color: showWeights ? "#7a9e98" : "#aac8c2",
+            border: "1px solid #d0e8e4", borderRadius: 8,
+            padding: "7px 14px", fontSize: 11, fontWeight: 600,
             cursor: "pointer", whiteSpace: "nowrap", transition: "all 0.2s",
+            letterSpacing: "0.04em",
           }}>
-            {showWeights ? "✓ Editing Weights" : "⚖ Adjust Weights"}
+            {showWeights ? "✓ weights" : "⚖ weights"}
           </button>
         </div>
 
