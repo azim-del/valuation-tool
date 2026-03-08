@@ -333,16 +333,31 @@ export default function App() {
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
 
       {/* Header */}
-      <div style={{ background: "#0e4f4f", color: "white", padding: "40px 40px 60px", position: "relative", overflow: "hidden" }}>
+      <div style={{ background: "#0e4f4f", color: "white", padding: "28px 40px 48px", position: "relative", overflow: "hidden", borderRadius: 20, margin: "16px 24px 0", maxWidth: 960, marginLeft: "auto", marginRight: "auto" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 80% 50%, #1a7a5e33 0%, transparent 60%), radial-gradient(circle at 20% 80%, #2aaa8a22 0%, transparent 50%)" }} />
         <div style={{ position: "relative", maxWidth: 960, margin: "0 auto" }}>
+          <img
+            src="/logo.png"
+            alt="Herringbone Digital"
+            style={{ position: "absolute", top: 0, right: 0, height: 40, opacity: 0.9 }}
+          />
           <div style={{ fontSize: 12, letterSpacing: "0.15em", textTransform: "uppercase", color: "#7ecec0", marginBottom: 10, fontWeight: 600 }}>Digital Marketing Agency</div>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 900, margin: 0, lineHeight: 1.15, marginBottom: 12 }}>Valuation Builder</h1>
-          <p style={{ color: "#a8d8d0", fontSize: 15, margin: 0, maxWidth: 500, lineHeight: 1.6 }}>Adjust each factor to explore how operational and financial decisions drive your agency's exit multiple.</p>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 900, margin: 0, lineHeight: 1.15, marginBottom: 16 }}>Valuation Estimator</h1>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, maxWidth: 700, marginBottom: 14 }}>
+            <div style={{ background: "rgba(255,255,255,0.07)", borderRadius: 10, padding: "12px 16px", borderLeft: "3px solid #2aaa8a" }}>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#7ecec0", marginBottom: 6 }}>Financial</div>
+              <p style={{ color: "#a8d8d0", fontSize: 13, margin: 0, lineHeight: 1.5 }}>Adjust the sliders to enter your financial metrics. If you are not sure, just leave it in the middle.</p>
+            </div>
+            <div style={{ background: "rgba(255,255,255,0.07)", borderRadius: 10, padding: "12px 16px", borderLeft: "3px solid #2aaa8a" }}>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#7ecec0", marginBottom: 6 }}>Commercial</div>
+              <p style={{ color: "#a8d8d0", fontSize: 13, margin: 0, lineHeight: 1.5 }}>Adjust the sliders to show where your agency is against each of these qualitative factors.</p>
+            </div>
+          </div>
+          <p style={{ color: "#6aada4", fontSize: 11, margin: 0, lineHeight: 1.5, fontStyle: "italic", maxWidth: 700 }}>This tool is for illustrative purposes. Actual valuations depend on market conditions, buyer universe, deal structure, and advisor positioning. Ranges are based on typical PE/strategic M&A activity in the digital marketing services sector.</p>
         </div>
       </div>
 
-      <div style={{ maxWidth: 960, margin: "-30px auto 0", padding: "0 24px" }}>
+      <div style={{ maxWidth: 960, margin: "20px auto 0", padding: "0 24px" }}>
 
         {/* Main score card */}
         <div style={{ background: "white", borderRadius: 20, padding: "28px 36px", boxShadow: "0 8px 40px rgba(14,79,79,0.15)", display: "flex", alignItems: "center", gap: 36, flexWrap: "wrap" }}>
