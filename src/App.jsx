@@ -124,6 +124,8 @@ const BENCHMARKS = [
     label: "Typical Agency",
     description: "Most owner-operated agencies going to market",
     color: "#e07b39",
+    fixedMultiple: 4.5,
+    rangeLabel: "4x – 5x",
     scores: { scale: 25, growth: 40, ebitda: 45, retention: 40, concentration: 30, founder: 25, verticals: 50, standardization: 30, ai: 25 },
   },
   {
@@ -131,6 +133,8 @@ const BENCHMARKS = [
     label: "Strong Performer",
     description: "Top-quartile agency, PE-ready",
     color: "#c5a52a",
+    fixedMultiple: 5.5,
+    rangeLabel: "5x – 6x",
     scores: { scale: 60, growth: 70, ebitda: 70, retention: 68, concentration: 65, founder: 60, verticals: 72, standardization: 65, ai: 55 },
   },
   {
@@ -138,6 +142,8 @@ const BENCHMARKS = [
     label: "Premium Asset",
     description: "Best-in-class, multiple strategic bidders",
     color: "#2aaa8a",
+    fixedMultiple: 7.5,
+    rangeLabel: "7x – 8x",
     scores: { scale: 88, growth: 88, ebitda: 85, retention: 85, concentration: 85, founder: 82, verticals: 80, standardization: 82, ai: 78 },
   },
 ];
@@ -172,6 +178,15 @@ function getMultipleLabel(multiple) {
   if (multiple < 6)   return { label: "Good Foundation",  range: "5x – 6x", color: "#7a9e30", bg: "#f6faea" };
   if (multiple < 7)   return { label: "Strong Asset",     range: "6x – 7x", color: "#2a8a5e", bg: "#f0faf6" };
   return                     { label: "Premium Asset",    range: "7x+",     color: "#0e4f4f", bg: "#e8f5f2" };
+}
+
+// Convert a multiple value back to a 0-100 bar position
+function multipleToBarPct(m) {
+  if (m <= 3) return 0;
+  if (m <= 4.5) return ((m - 3) / 1.5) * 44;
+  if (m <= 6.5) return 44 + ((m - 4.5) / 2) * 28;
+  if (m <= 8) return 72 + ((m - 6.5) / 1.5) * 16;
+  return Math.min(88 + ((m - 8) / 2) * 12, 100);
 }
 
 function calcScore(values, weights) {
@@ -306,8 +321,8 @@ export default function App() {
 
   const benchmarkMultiples = BENCHMARKS.map(b => ({
     ...b,
-    score: calcScore(b.scores, weights),
-    multiple: getMultiple(calcScore(b.scores, weights), b.scores.scale),
+    score: multipleToBarPct(b.fixedMultiple),
+    multiple: b.fixedMultiple,
   }));
 
   const toggleBenchmark = (id) =>
@@ -415,7 +430,7 @@ export default function App() {
             <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#7a9e98" }}>Benchmarks</span>
             <span style={{ fontSize: 12, color: "#bcd4cf" }}>— toggle to compare where you stand vs. market</span>
           </div>
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10 }}>
             {BENCHMARKS.map(b => {
               const bm = benchmarkMultiples.find(x => x.id === b.id);
               const active = activeBenchmarks.includes(b.id);
@@ -425,7 +440,7 @@ export default function App() {
                   background: active ? b.color + "14" : "#f8faf9",
                   border: `2px solid ${active ? b.color : "#e0ebe8"}`,
                   borderRadius: 12, padding: "10px 16px", cursor: "pointer",
-                  transition: "all 0.18s", textAlign: "left",
+                  transition: "all 0.18s", textAlign: "left", width: "100%",
                 }}>
                   <div style={{
                     width: 12, height: 12, borderRadius: "50%",
@@ -437,7 +452,7 @@ export default function App() {
                   <div>
                     <div style={{ fontSize: 12, fontWeight: 700, color: active ? b.color : "#999", lineHeight: 1.2 }}>
                       {b.label}
-                      {active && <span style={{ fontFamily: "'DM Mono', monospace", marginLeft: 6 }}>{bm.multiple.toFixed(1)}x</span>}
+                      {active && <span style={{ fontFamily: "'DM Mono', monospace", marginLeft: 6 }}>{b.rangeLabel}</span>}
                     </div>
                     <div style={{ fontSize: 10, color: "#aaa", lineHeight: 1.3 }}>{b.description}</div>
                   </div>
@@ -447,7 +462,7 @@ export default function App() {
             <div style={{
               display: "flex", alignItems: "center", gap: 10,
               background: "#0e4f4f14", border: "2px solid #0e4f4f",
-              borderRadius: 12, padding: "10px 16px",
+              borderRadius: 12, padding: "10px 16px", width: "100%",
             }}>
               <div style={{ width: 12, height: 12, borderRadius: "50%", background: "#0e4f4f", border: "2px solid white", boxShadow: "0 0 0 1.5px #0e4f4f", flexShrink: 0 }} />
               <div>
