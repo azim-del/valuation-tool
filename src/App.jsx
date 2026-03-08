@@ -146,12 +146,23 @@ const CATEGORY_COLORS = { Financial: "#0e4f4f", Commercial: "#2aaa8a" };
 const CATEGORY_BG = { Financial: "#e8f5f2", Commercial: "#f5fdfb" };
 
 function getMultiple(score, scaleValue) {
-  // Sub-$0.5M EBITDA (scale slider < 10) hard-caps to sub-3x territory
-  if (scaleValue < 10) return Math.min(2.9, 1.5 + (scaleValue / 10) * 1.4);
-  if (score <= 44) return 3.0 + (score / 44) * 1.5;
-  if (score < 72)  return 4.5 + ((score - 44) / 28) * 2.0;
-  if (score < 88)  return 6.5 + ((score - 72) / 16) * 1.5;
-  return Math.min(8.0 + ((score - 88) / 12) * 2.0, 10);
+  // Convert scaleValue (0-100) to EBITDA in $M (0-5M)
+  const ebitda = (scaleValue / 100) * 5;
+
+  // Base multiple from quality score
+  let base;
+  if (score <= 44) base = 3.0 + (score / 44) * 1.5;
+  else if (score < 72)  base = 4.5 + ((score - 44) / 28) * 2.0;
+  else if (score < 88)  base = 6.5 + ((score - 72) / 16) * 1.5;
+  else base = Math.min(8.0 + ((score - 88) / 12) * 2.0, 10);
+
+  // Scale caps and floors
+  if (ebitda < 0.5) return Math.min(base, 2.9);           // Always sub-3x
+  if (ebitda < 1.0) return Math.min(base, 4.5);           // Cap at 4.5x
+  if (ebitda < 2.0) return Math.min(base, 6.0);           // Cap at 6x
+  if (ebitda < 2.5) return Math.max(Math.min(base, 6.5), 5.0);  // 5x–6.5x range
+  if (ebitda < 3.0) return Math.max(Math.min(base, 7.5), 6.0);  // 6x–7.5x range
+  return Math.max(base, 6.5);                              // Always 6.5x+ above $3M
 }
 
 function getMultipleLabel(multiple) {
